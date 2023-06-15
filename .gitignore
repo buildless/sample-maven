@@ -1,0 +1,5 @@
+.vscode/
+
+.mvn/wrapper/*.jar
+target/
+remote-cache/maven/v*
