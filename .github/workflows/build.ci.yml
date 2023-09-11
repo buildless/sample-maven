@@ -1,0 +1,45 @@
+name: "Build: Sample"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "*.kt"
+      - "*.java"
+      - .mvn
+      - src
+      - pom.xml
+      - settings.xml
+      - .github/workflows/build.ci.yml
+
+  pull_request:
+    paths:
+        - "*.kt"
+        - "*.java"
+        - .mvn
+        - src
+        - pom.xml
+        - settings.xml
+        - .github/workflows/build.ci.yml
+
+  schedule:
+    - cron: '30 */2 * * *'
+
+jobs:
+  ## Build sample app
+  build-sample:
+    name: "Sample App"
+    uses: elide-dev/build-infra/.github/workflows/jvm.maven.yml@main
+    secrets:
+      BUILDLESS_APIKEY: ${{ secrets.BUILDLESS_APIKEY }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    permissions:
+      checks: write
+      pull-requests: read
+      id-token: write
+      actions: read
+      contents: write
+    with:
+      jvm: '19'
+      runner: ubuntu-latest
